@@ -1,80 +1,47 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
-export default function Home() {
+function Main() {
   return (
-    <div className="flex flex-col min-h-screen bg-blue-500">
-      {/* Navigation Menu */}
-      <nav className="w-full text-center shadow-md py-4 bg-white">
-        <ul className="inline-flex space-x-8">
-          <li>
-            <Link href="/about_us">
-              <button className="text-blue-600 hover:text-blue-800 font-medium transition duration-300 ease-in-out">
-                About Us
-              </button>
-            </Link>
-          </li>
-          <li>
-            <Link href="/contact">
-              <button className="text-blue-600 hover:text-blue-800 font-medium transition duration-300 ease-in-out">
-                Contact
-              </button>
-            </Link>
-          </li>
-        </ul>
-      </nav>
+    <div className="relative min-h-screen bg-cyan-400 overflow-hidden">
+      {/* Top right button for Login */}
+      <div className="absolute top-0 right-0 mt-4 mr-4 z-10">
+        <Link href="/loginPage">
+          <button className="inline-block px-6 py-2 text-sm font-medium leading-6 text-center text-white uppercase transition bg-blue-500 rounded-full shadow ripple hover:shadow-lg hover:bg-blue-600 focus:outline-none">
+            Login
+          </button>
+        </Link>
+      </div>
 
-      {/* Image and Content */}
-      <div className="flex-grow flex flex-col items-center justify-center p-4 text-center">
-        {/* Image Container */}
-        
-        
-        {/* Welcome Text */}
-        <h1 className="text-4xl font-bold mb-8 text-white">Welcome to Listly</h1>
+      {/* Flex container for text and image */}
+      <div className="flex flex-row justify-between items-start p-8">
+        {/* Left side - Text content */}
+        <div>
+          <h1 className="text-3xl font-bold">Listly</h1>
+          <div className="text-4xl font-bold mt-10">
+            <p>Streamlining your stock,</p>
+            <p>unlocking your success</p>
+          </div>
+          <div className="text-2xl mt-1">
+            <p>we optimize inventory to pave the way</p>
+            <p>for your business to thrive.</p>
+          </div>
+        </div>
 
-        {/* Sign Up/Login Form */}
-        <div className="w-full max-w-lg mx-auto bg-white rounded-lg shadow-xl p-10">
-          <form className="space-y-6">
-            <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                Username
-              </label>
-              <input
-                id="username"
-                type="text"
-                placeholder="Username"
-                className="mt-1 block w-full px-3 py-2 bg-gray-200 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                placeholder="Password"
-                className="mt-1 block w-full px-3 py-2 bg-gray-200 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                required
-              />
-            </div>
-            <div className="flex flex-col space-y-4">
-              <Link href="/Home">
-                <button className="w-full flex justify-center items-center px-6 py-3 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition-colors duration-300 ease-in-out">
-                  Sign Up
-                </button>
-              </Link>
-              <Link href="/Home">
-                <button className="w-full flex justify-center items-center px-6 py-3 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition-colors duration-300 ease-in-out">
-                  Login
-                </button>
-              </Link>
-            </div>
-          </form>
+        {/* Right side - Image */}
+        <div className="flex-none mt-10 lg:mt-20">
+          <Image
+            src="/image1.png" // Replace with your image path
+            alt="Descriptive Alt Text"
+            width={600} // Adjust the width as needed
+            height={300} // Adjust the height as needed
+            objectFit="cover" // Adjust as needed to 'contain' if you don't want the image cropped
+          />
         </div>
       </div>
     </div>
   );
 }
+
+export default Main;
