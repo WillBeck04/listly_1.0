@@ -21,7 +21,7 @@ function Main() {
           <h1 className="text-3xl font-bold">Listly</h1>
           <div className="text-4xl font-bold mt-10">
             <p>Streamlining your stock,</p>
-            <p>unlocking your success</p>
+            <p>unlocking your success!</p>
           </div>
           <div className="text-2xl mt-1">
             <p>we optimize inventory to pave the way</p>
