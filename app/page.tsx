@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Aboutus from './about_us/page';
 
 function Main() {
   return (
@@ -40,6 +41,7 @@ function Main() {
           />
         </div>
       </div>
+      <Aboutus />
     </div>
   );
 }
