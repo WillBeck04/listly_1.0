@@ -23,13 +23,7 @@ export default function Home() {
         <div className="space-x-4">
           <Link href="/Home/inventory">
             <button className="bg-blue-500 text-white rounded-full px-10 py-3 text-lg focus:outline-none hover:bg-blue-600 transition-colors duration-300 ease-in-out">
-              See My Inventory
-            </button>
-          </Link>
-          
-          <Link href="/Home/update_inventory">
-            <button className="bg-blue-500 text-white rounded-full px-10 py-3 text-lg focus:outline-none hover:bg-blue-600 transition-colors duration-300 ease-in-out">
-              Update Inventory
+              Manage My Inventory
             </button>
           </Link>
 
