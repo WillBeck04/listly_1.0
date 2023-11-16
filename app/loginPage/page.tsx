@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -8,13 +9,7 @@ export default function Login() {
       {/* Navigation Menu */}
       <nav className="w-full text-center shadow-md py-4 bg-white">
         <ul className="inline-flex justify-center space-x-8">
-          <li>
-            <Link href="/about_us">
-              <button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">
-                About Us
-              </button>
-            </Link>
-          </li>
+         
           <li>
             <Link href="/contact">
               <button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">
