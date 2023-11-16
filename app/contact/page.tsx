@@ -15,9 +15,6 @@ function Contact() {
           <p className="text-gray-600">
             <span className="font-semibold">Salomon Lavy:</span> <a href="mailto:salomon.lavyperez@mail.mcgill.ca" className="text-blue-600 hover:text-blue-700 transition duration-300 ease-in-out">salomon.lavyperez@mail.mcgill.ca</a>
           </p>
-          <p className="text-gray-600">
-            <span className="font-semibold">James Kidd:</span> <a href="mailto:james.kidd@mail.mcgill.ca" className="text-blue-600 hover:text-blue-700 transition duration-300 ease-in-out">james.kidd@mail.mcgill.ca</a>
-          </p>
         </div>
       </div>
     </div>
