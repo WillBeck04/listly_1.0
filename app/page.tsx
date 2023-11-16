@@ -73,8 +73,8 @@ function Main() {
               </ul>
             )}
           </div>
+          
         </div>
-
         {/* Right side - Image */}
         <div className="flex-none mt-10 lg:mt-20">
           <Image
