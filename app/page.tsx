@@ -116,7 +116,19 @@ const Main: FC = () => {
           <div className="w-full lg:w-1/2 lg:py-6 text-center">
             <Image className="rounded-lg" src="/Image3.png" width={800} height={400} alt="Inventory" />
           </div>
+          
         </div>
+<<<<<<< HEAD
+        {/* Right side - Image */}
+        <div className="flex-none mt-10 lg:mt-20">
+          <Image
+            src="/image1.png" // Replace with your image path
+            alt="Descriptive Alt Text"
+            width={500}
+            height={250}
+            objectFit="contain"
+          />
+=======
       </motion.div>
 
       {/* About Us Section */}
@@ -133,6 +145,7 @@ const Main: FC = () => {
               </Link>
             </div>
           </div>
+>>>>>>> b725d261a14768d6c47074c580eb737be951d04a
         </div>
       </footer>
     </div>
