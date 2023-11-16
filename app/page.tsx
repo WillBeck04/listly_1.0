@@ -1,14 +1,49 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+// Main.tsx
+import React, { useState, useEffect, FC } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Aboutus from './about_us/page';
+import { motion } from 'framer-motion';
+import AboutUs from './about_us/page'; // Make sure this is the correct path
 
-function Main() {
-  const [textIndex, setTextIndex] = useState(0);
-  const [bulletVisible, setBulletVisible] = useState(Array(6).fill(false));
-  const fullText = "Streamlining your stock, unlocking your success! We optimize inventory to pave the way for your business to thrive.";
-  const bulletPoints = [
+const NavBar: FC = () => {
+  return (
+    <nav className="sticky top-0 bg-white shadow z-50">
+      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+        <Link href="/">
+          <button className="font-bold text-xl text-gray-800">Listly</button>
+        </Link>
+        <div className="flex space-x-4">
+          {['Home', 'Features', 'Pricing', 'About Us', 'Contact'].map((item, index) => (
+            <Link key={index} href={`/${item.toLowerCase()}`}>
+              <button className="text-gray-600 hover:text-cyan-500 cursor-pointer text-sm uppercase">{item}</button>
+            </Link>
+          ))}
+        </div>
+        <div className="flex space-x-2"> {/* Controls the space between Login and Sign Up */}
+          <Link href="/loginPage">
+            <button className="text-gray-500 font-bold py-2 px-2 rounded">
+              Login
+            </button>
+          </Link>
+          <Link href="/loginPage">
+            <button className="text-gray-500 font-bold py-2 px-2 rounded">
+              Sign Up
+            </button>
+          </Link>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+
+
+const Main: FC = () => {
+  const [textIndex, setTextIndex] = useState<number>(0);
+  const [bulletVisible, setBulletVisible] = useState<boolean[]>(new Array(6).fill(false));
+  const fullText: string = "Streamlining your stock, unlocking your success! We optimize inventory to pave the way for your business to thrive.";
+  const bulletPoints: string[] = [
     "Automated Inventory Management",
     "Real-time Stock Updates",
     "Data-Driven Insights",
@@ -16,7 +51,7 @@ function Main() {
     "User-Friendly Interface",
     "Secure Data Handling"
   ];
-  const typingSpeed = 50; // Speed of typing effect in milliseconds
+  const typingSpeed: number = 20; // Speed of typing effect in milliseconds
 
   useEffect(() => {
     const textInterval = setInterval(() => {
@@ -25,7 +60,8 @@ function Main() {
           return current + 1;
         } else {
           clearInterval(textInterval);
-          startBulletPoints();
+          // Trigger visibility of bullet points
+          setBulletVisible(new Array(6).fill(true));
           return current;
         }
       });
@@ -34,59 +70,71 @@ function Main() {
     return () => clearInterval(textInterval);
   }, []);
 
-  const startBulletPoints = () => {
-    bulletPoints.forEach((_, index) => {
-      setTimeout(() => {
-        setBulletVisible((visible) => {
-          const newVisible = [...visible];
-          newVisible[index] = true;
-          return newVisible;
-        });
-      }, index * 1000); // Each bullet point appears 1 second after the previous
-    });
-  };
-
   return (
-    <div className="relative min-h-screen bg-cyan-400 overflow-hidden">
-      {/* Top right button for Login */}
-      <div className="absolute top-0 right-0 mt-4 mr-4 z-10">
-        <Link href="/loginPage">
-          <button className="inline-block px-6 py-2 text-sm font-medium leading-6 text-center text-white uppercase transition duration-300 ease-in-out transform hover:scale-105 bg-blue-500 rounded-full shadow hover:shadow-lg focus:outline-none">
-            Login
-          </button>
-        </Link>
-      </div>
+    <div className="flex flex-col min-h-screen overflow-hidden">
+      {/* Navigation */}
+      <NavBar />
 
-      {/* Flex container for text and image */}
-      <div className="flex flex-row justify-between items-start p-8">
-        {/* Left side - Text content */}
-        <div className="w-3/4 pr-4"> {/* Adjusted width and added padding */}
-          <h1 className="text-5xl font-bold text-gray-800">Listly</h1>
-          <div className="text-xl font-medium text-gray-600 mt-5 overflow-visible" style={{ height: 'auto' }}> {/* Adjusted overflow and height */}
-            {fullText.substring(0, textIndex)}
-            <span className="text-gray-600 opacity-50">|</span>
-            {textIndex === fullText.length && (
-              <ul className="list-disc pl-5 mt-4">
-                {bulletPoints.map((point, index) => (
-                  <li key={index} className={`text-gray-600 font-medium transition-all duration-500 ease-in-out ${bulletVisible[index] ? 'translate-y-0 opacity-100' : '-translate-y-5 opacity-0'}`}>{point}</li>
-                ))}
-              </ul>
-            )}
+      {/* Hero section */}
+      <motion.div
+        className="flex-grow bg-cyan-100 p-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        {/* Content */}
+        <div className="container mx-auto flex flex-col md:flex-row items-center my-12 md:my-24">
+          {/* Left side */}
+          <div className="flex flex-col w-full lg:w-1/2 justify-center items-start p-8">
+            <h1 className="text-3xl md:text-6xl p-2 text-gray-700 font-bold leading-tight">Streamline Your Inventory</h1>
+            <p className="text-sm md:text-base text-gray-500 text-justify p-2">
+              {fullText.substring(0, textIndex)}
+              <span className="text-gray-600 opacity-50">|</span>
+            </p>
+            
+            {/* Bullet Points */}
+            <div className="mt-4">
+              {bulletVisible.some(visible => visible) && (
+                <ul className="list-disc pl-5 space-y-2">
+                  {bulletPoints.map((point, index) => (
+                    <li key={index} className={`text-gray-600 transition-opacity duration-500 ease-in-out ${bulletVisible[index] ? 'opacity-100' : 'opacity-0'}`}>
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="mt-6">
+              <Link href="/features">
+                <button className="bg-transparent hover:bg-cyan-500 text-cyan-500 font-semibold hover:text-white py-2 px-4 border border-cyan-500 hover:border-transparent rounded">
+                  Explore Features
+                </button>
+              </Link>
+            </div>
+          </div>
+          {/* Right side */}
+          <div className="w-full lg:w-1/2 lg:py-6 text-center">
+            <Image className="rounded-lg" src="/Image3.png" width={800} height={400} alt="Inventory" />
           </div>
         </div>
+      </motion.div>
 
-        {/* Right side - Image */}
-        <div className="flex-none mt-10 lg:mt-20">
-          <Image
-            src="/image1.png" // Replace with your image path
-            alt="Descriptive Alt Text"
-            width={500}
-            height={250}
-            objectFit="contain"
-          />
+      {/* About Us Section */}
+      <AboutUs />
+
+      {/* Footer */}
+      <footer className="bg-white">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex justify-between items-center">
+            <p className="text-gray-500 text-sm">© 2023 Listly. All rights reserved.</p>
+            <div className="text-gray-500">
+              <Link href="/privacy">
+                <button>Privacy Policy</button>
+              </Link>
+            </div>
+          </div>
         </div>
-      </div>
-      <Aboutus />
+      </footer>
     </div>
   );
 }
