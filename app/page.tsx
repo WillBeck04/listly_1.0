@@ -26,7 +26,7 @@ const NavBar: FC = () => {
               Login
             </button>
           </Link>
-          <Link href="/loginPage">
+          <Link href="/signUpPage">
             <button className="text-gray-500 font-bold py-2 px-2 rounded">
               Sign Up
             </button>

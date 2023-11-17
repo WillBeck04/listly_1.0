@@ -56,11 +56,7 @@ export default function Login() {
               />
             </div>
             <div className="flex flex-col space-y-4">
-              <Link href="/Home">
-                <button className="w-full flex justify-center items-center px-6 py-3 bg-cyan-500 text-white font-bold rounded-full hover:bg-cyan-600 transition-colors duration-300 ease-in-out">
-                  Sign Up
-                </button>
-              </Link>
+              
               <Link href="/Home">
                 <button className="w-full flex justify-center items-center px-6 py-3 bg-cyan-500 text-white font-bold rounded-full hover:bg-cyan-600 transition-colors duration-300 ease-in-out">
                   Login
