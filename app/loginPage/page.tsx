@@ -1,9 +1,47 @@
-
-import Image from 'next/image';
+'use client'
 import Link from 'next/link';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 
 export default function Login() {
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+    const [errorMessage, setErrorMessage] = useState('');
+    const router = useRouter();
+
+    const handleChange = (e: { target: { id: any; value: any; }; }) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+          const response = await fetch('http://localhost:8080/api/login', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(formData),
+          });
+  
+          const data = await response.json();
+          console.log('Response status:', response.status); // Debugging log
+          console.log('Response data:', data); // Debugging log
+  
+          if (response.ok) {
+              console.log('Redirecting to home...'); // Debugging log
+              router.push('/Home');
+          } else {
+              setErrorMessage(data.error || 'Invalid login credentials.');
+          }
+      } catch (error) {
+          console.error('Error:', error);
+          setErrorMessage('An error occurred during login.');
+      }
+  };
+  
   return (
     <div className="flex flex-col min-h-screen bg-cyan-100">
       {/* Navigation Menu */}
@@ -32,40 +70,46 @@ export default function Login() {
         <div className="w-full max-w-lg mx-auto bg-white rounded-lg shadow-xl p-10">
           <form className="space-y-6">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                Username
-              </label>
-              <input
-                id="username"
-                type="text"
-                placeholder="Username"
-                className="mt-1 block w-full px-3 py-2 bg-gray-200 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"
-                required
-              />
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                                Email
+                            </label>
+                            <input
+                                id="email"
+                                type="email"
+                                placeholder="Email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                                className="mt-1 block w-full px-3 py-2 bg-gray-200 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                                Password
+                            </label>
+                            <input
+                                id="password"
+                                type="password"
+                                placeholder="Password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                                className="mt-1 block w-full px-3 py-2 bg-gray-200 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"
+                            />
+                        </div>
+                        <div className="flex flex-col space-y-4">
+                            <button
+                                type="submit"
+                                className="w-full flex justify-center items-center px-6 py-3 bg-cyan-500 text-white font-bold rounded-full hover:bg-cyan-600 transition-colors duration-300 ease-in-out"
+                            >
+                                Login
+                            </button>
+                        </div>
+                    </form>
+                    {/* Error Message */}
+                    {errorMessage && <div className="mt-4 text-red-600">{errorMessage}</div>}
+                </div>
             </div>
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                placeholder="Password"
-                className="mt-1 block w-full px-3 py-2 bg-gray-200 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"
-                required
-              />
-            </div>
-            <div className="flex flex-col space-y-4">
-              
-              <Link href="/Home">
-                <button className="w-full flex justify-center items-center px-6 py-3 bg-cyan-500 text-white font-bold rounded-full hover:bg-cyan-600 transition-colors duration-300 ease-in-out">
-                  Login
-                </button>
-              </Link>
-            </div>
-          </form>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
