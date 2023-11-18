@@ -1,6 +1,6 @@
-'use client'
+'use client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // Corrected import for useRouter
 import React, { useState } from 'react';
 
 export default function Login() {
@@ -15,61 +15,60 @@ export default function Login() {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      try {
-          const response = await fetch('http://localhost:8080/api/login', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(formData),
-          });
-  
-          const data = await response.json();
-          console.log('Response status:', response.status); // Debugging log
-          console.log('Response data:', data); // Debugging log
-  
-          if (response.ok) {
-              console.log('Redirecting to home...'); // Debugging log
-              router.push('/Home');
-          } else {
-              setErrorMessage(data.error || 'Invalid login credentials.');
-          }
-      } catch (error) {
-          console.error('Error:', error);
-          setErrorMessage('An error occurred during login.');
-      }
-  };
-  
-  return (
-    <div className="flex flex-col min-h-screen bg-cyan-100">
-      {/* Navigation Menu */}
-      <nav className="w-full text-center shadow-md py-4 bg-white">
-        <ul className="inline-flex justify-center space-x-8">
-         
-          <li>
-            <Link href="/contact">
-              <button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">
-                Contact
-              </button>
-            </Link>
-          </li>
-        </ul>
-      </nav>
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://localhost:8080/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
 
-      {/* Image and Content */}
-      <div className="flex-grow flex flex-col items-center justify-center p-4 text-center">
-        {/* Image Container */}
-        {/* Optional: Add an image here if relevant to your design */}
-        
-        {/* Welcome Text */}
-        <h1 className="text-4xl font-bold mb-8 text-gray-800">Welcome to Listly</h1>
+            const data = await response.json();
 
-        {/* Sign Up/Login Form */}
-        <div className="w-full max-w-lg mx-auto bg-white rounded-lg shadow-xl p-10">
-          <form className="space-y-6">
-            <div>
+            if (response.ok) {
+                // Store the JWT token in local storage
+                localStorage.setItem('token', data.access_token);
+                router.push('/Home'); // Modify as needed for your application
+            } else {
+                setErrorMessage(data.error || 'Invalid login credentials.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setErrorMessage('An error occurred during login.');
+        }
+    };
+
+    return (
+        <div className="flex flex-col min-h-screen bg-cyan-100">
+            {/* Navigation Menu */}
+            <nav className="w-full text-center shadow-md py-4 bg-white">
+                <ul className="inline-flex justify-center space-x-8">
+                    <li>
+                        <Link href="/contact">
+                            <button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">
+                                Contact
+                            </button>
+                        </Link>
+                    </li>
+                    {/* Add more navigation items as needed */}
+                </ul>
+            </nav>
+
+            {/* Image and Content */}
+            <div className="flex-grow flex flex-col items-center justify-center p-4 text-center">
+                {/* Image Container */}
+                {/* Add an image or additional content here if needed */}
+                
+                {/* Welcome Text */}
+                <h1 className="text-4xl font-bold mb-8 text-gray-800">Welcome to Listly</h1>
+
+                {/* Login Form */}
+                <div className="w-full max-w-lg mx-auto bg-white rounded-lg shadow-xl p-10">
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                        <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                 Email
                             </label>
@@ -100,8 +99,7 @@ export default function Login() {
                         <div className="flex flex-col space-y-4">
                             <button
                                 type="submit"
-                                className="w-full flex justify-center items-center px-6 py-3 bg-cyan-500 text-white font-bold rounded-full hover:bg-cyan-600 transition-colors duration-300 ease-in-out"
-                            >
+                                className="w-full flex justify-center items-center px-6 py-3 bg-cyan-500 text-white font-bold rounded-full hover:bg-cyan-600 transition-colors duration-300 ease-in-out">
                                 Login
                             </button>
                         </div>
