@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 interface Item {
   id: number;
   name: string;
+  quantity: number;
 }
 
 const ItemsPage: React.FC = () => {
