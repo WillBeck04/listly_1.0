@@ -9,9 +9,9 @@ const Home: FC = () => {
         <ul className="flex justify-center space-x-6">
           <li><Link href="/Home/inventory"><button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">Inventory</button></Link></li>
           <li><Link href="/Home/analytics"><button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">Analytics</button></Link></li>
-          <li><Link href="/Home/reports"><button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">Reports</button></Link></li>
-          <li><Link href="/Home/settings"><button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">Settings</button></Link></li>
-          <li><Link href="/Home/support"><button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">Support</button></Link></li>
+          <li><Link href="/Home/restock_suggestion"><button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">Restock Suggestion</button></Link></li>
+          <li><Link href="/loginPage"><button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">Log Out</button></Link></li>
+          <li><Link href="/contact"><button className="text-gray-800 hover:text-cyan-500 font-medium transition duration-300 ease-in-out">Support</button></Link></li>
         </ul>
       </nav>
 

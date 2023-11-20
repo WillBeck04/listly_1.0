@@ -14,11 +14,27 @@ const NavBar: FC = () => {
           <button className="font-bold text-xl text-gray-800">Listly</button>
         </Link>
         <div className="flex space-x-4">
-          {['Home', 'Features', 'Pricing', 'About Us', 'Contact'].map((item, index) => (
-            <Link key={index} href={`/${item.toLowerCase()}`}>
-              <button className="text-gray-600 hover:text-cyan-500 cursor-pointer text-sm uppercase">{item}</button>
-            </Link>
-          ))}
+          {[ 'Pricing', 'About Us', 'Contact'].map((item, index) => {
+            let href = '';
+            switch (item) {
+              case 'Home':
+                href = '/app'; // Change this to your home page route
+                break;
+              case 'About Us':
+                href = '/about_us'; // Adjust the route for the About Us page
+                break;
+              case 'Pricing':
+                href = '/pricing'; // Adjust the route for the Pricing page
+                break;
+              default:
+                href = `/${item.toLowerCase()}`; // Default case for other items
+            }
+            return (
+              <Link key={index} href={href}>
+                <button className="text-gray-600 hover:text-cyan-500 cursor-pointer text-sm uppercase">{item}</button>
+              </Link>
+            );
+          })}
         </div>
         <div className="flex space-x-2"> {/* Controls the space between Login and Sign Up */}
           <Link href="/loginPage">
@@ -36,7 +52,6 @@ const NavBar: FC = () => {
     </nav>
   );
 };
-
 
 
 const Main: FC = () => {
@@ -138,5 +153,6 @@ const Main: FC = () => {
     </div>
   );
 }
+
 
 export default Main;
