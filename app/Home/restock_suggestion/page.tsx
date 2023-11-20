@@ -1,28 +1,41 @@
-import React from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 
-// Sample inventory data
-const initialInventoryItems = [
-  { name: 'Tomatoes', quantity: 10 },
-  { name: 'Salad', quantity: 0 },
-  { name: 'Apples', quantity: 15 },
-  { name: 'Bananas', quantity: 20 },
-  { name: 'Oranges', quantity: 12 },
-  { name: 'Lettuce', quantity: 7 },
-  { name: 'Cucumbers', quantity: 9 },
-  { name: 'Shampoo', quantity: 10 },
-  { name: 'Soap', quantity: 8 },
-  { name: 'Chicken', quantity: 15 },
-  { name: 'Beef Steak', quantity: 20 },
-  { name: 'Apple Juice', quantity: 0 },
-  { name: 'Pasta', quantity: 7 },
-  { name: 'Rice', quantity: 0 },
-  // ... add as many other items as you need
-];
+interface InventoryItem {
+  id: number;
+  name: string;
+  quantity: number;
+}
 
+const RestockSuggestion: React.FC = () => {
+  const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>([]);
 
-function RestockSuggestion() {
-  // Filter items with quantity of 5 or less for restocking
-  const itemsToRestock = initialInventoryItems.filter(item => item.quantity <= 5);
+  useEffect(() => {
+    fetchInventory();
+  }, []);
+
+  const fetchInventory = async () => {
+    try {
+      // Assuming you have a token for authorization
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:8080/api/inventory', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setInventoryItems(data);
+      } else {
+        console.error('Failed to fetch inventory.');
+      }
+    } catch (error) {
+      console.error('Error fetching inventory:', error);
+    }
+  };
+
+  const itemsToRestock = inventoryItems.filter(item => item.quantity < 3);
 
   return (
     <div className="p-4 bg-gray-100 min-h-screen">
@@ -33,9 +46,7 @@ function RestockSuggestion() {
             <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg p-5">
               <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
               <p className="text-gray-700 mb-4">Current Stock: <span className="text-red-500">{item.quantity}</span></p>
-              <button className="mt-3 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Restock
-              </button>
+              {/* Restock button functionality can be added here */}
             </div>
           ))}
         </div>
