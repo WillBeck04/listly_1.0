@@ -1,4 +1,4 @@
-"client use"
+"use client"
 import React, { useState } from 'react';
 import { FaRocket, FaLightbulb, FaUsers, FaChartLine } from 'react-icons/fa'; // Added FaChartLine for the middle paragraph
 
