@@ -1,6 +1,7 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 
+// Define the structure of the inventory data expected from the API
 interface InventoryItem {
   id: number;
   name: string;
@@ -10,28 +11,40 @@ interface InventoryItem {
 }
 
 const AnalyticsPage: React.FC = () => {
+  // State for storing inventory data
   const [inventoryData, setInventoryData] = useState<InventoryItem[]>([]);
 
+  // Function to fetch inventory summary from the backend
   useEffect(() => {
     const fetchInventorySummary = async () => {
-      const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8080/api/inventory/summary', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (response.ok) {
-        const data: InventoryItem[] = await response.json();
-        setInventoryData(data);
-      } else {
-        console.error('Failed to fetch inventory summary');
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:8080/api/inventory/summary', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data); // Log to check if the data structure is correct
+          setInventoryData(data);
+        } else {
+          console.error('Failed to fetch inventory summary');
+        }
+      } catch (error) {
+        console.error('Error fetching inventory summary:', error);
       }
     };
-
+  
     fetchInventorySummary();
   }, []);
+  
 
-  const calculateLiquidation = (boughtQuantity: number, soldQuantity: number, totalQuantity: number) => {
-    return soldQuantity > 0 ? ((totalQuantity * 100) / soldQuantity).toFixed(2) : 'N/A';
+  // Calculate the liquidation value
+  const calculateLiquidation = (boughtQuantity: number, soldQuantity: number, totalQuantity: number): string => {
+    if (soldQuantity > 0) {
+      return ((totalQuantity * 100) / soldQuantity).toFixed(2);
+    }
+    return 'N/A'; // Return 'N/A' if soldQuantity is 0
   };
 
   return (
@@ -41,18 +54,18 @@ const AnalyticsPage: React.FC = () => {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th>Item</th>
-              <th>Quantity Bought</th>
-              <th>Quantity Sold</th>
-              <th>Liquidation</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r">Item</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r">Quantity Bought</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r">Quantity Sold</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Liquidation</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {inventoryData.map((item) => (
               <tr key={item.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.boughtQuantity}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{item.soldQuantity}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{item.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r">{item.boughtQuantity}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r">{item.soldQuantity}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{calculateLiquidation(item.boughtQuantity, item.soldQuantity, item.quantity)}</td>
               </tr>
             ))}
@@ -64,4 +77,3 @@ const AnalyticsPage: React.FC = () => {
 };
 
 export default AnalyticsPage;
-
