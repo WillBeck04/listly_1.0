@@ -62,6 +62,7 @@ const AnalyticsPage: React.FC = () => {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r">Item</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r">Quantity</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r">Quantity Bought</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r">Quantity Sold</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Liquidation</th>
@@ -71,6 +72,7 @@ const AnalyticsPage: React.FC = () => {
             {inventoryData.map((item) => (
               <tr key={item.id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{item.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{item.quantity}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r">{item.boughtQuantity}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 border-r">{item.soldQuantity}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{calculateLiquidation(item.boughtQuantity, item.soldQuantity, item.quantity)}</td>
